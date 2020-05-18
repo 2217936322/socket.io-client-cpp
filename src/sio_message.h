@@ -546,6 +546,12 @@ namespace sio
             return m_vector[i];
         }
 
+        template<class TEnum>
+        const message::ptr& operator[] (TEnum i) const
+        {
+            return m_vector[static_cast<uint8_t>(i)];
+        }
+
         message::ptr to_array_message(std::string const& event_name) const
         {
             message::ptr arr = array_message::create();

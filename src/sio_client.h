@@ -17,7 +17,7 @@ namespace sio
     
     class client {
     public:
-        enum close_reason
+        enum class close_reason : int8_t
         {
             close_reason_normal,
             close_reason_drop

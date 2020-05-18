@@ -36,8 +36,10 @@ namespace sio
     {
         using websocketpp::log::alevel;
 #ifndef DEBUG
+        //m_client.clear_con_listeners();
+       
         m_client.clear_access_channels(alevel::all);
-        m_client.set_access_channels(alevel::connect|alevel::disconnect|alevel::app);
+        //m_client.set_access_channels(alevel::connect|alevel::disconnect|alevel::app);
 #endif
         // Initialize the Asio transport policy
         m_client.init_asio();
@@ -422,7 +424,7 @@ namespace sio
         if(code == close::status::normal || m_con_state_was == con_closing)
         {
             this->sockets_invoke_void(&sio::socket::on_disconnect);
-            reason = client::close_reason_normal;
+            reason = client::close_reason::close_reason_normal;
         }
         else
         {
@@ -438,7 +440,7 @@ namespace sio
                 m_reconn_timer->async_wait(lib::bind(&client_impl::timeout_reconnect,this,lib::placeholders::_1));
                 return;
             }
-            reason = client::close_reason_drop;
+            reason = client::close_reason::close_reason_drop;
         }
         
         if(m_close_listener)
